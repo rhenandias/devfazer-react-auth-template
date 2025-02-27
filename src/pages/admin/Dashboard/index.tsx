@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import Layout from "@/components/Layout";
 import Loading from "@/components/Loading";
 import { useAuth } from "@/hooks/useAuth";
@@ -31,12 +32,9 @@ export default function Dashboard() {
               Tela de usuário autenticado
             </span>
             <span>Oá, {user?.username}</span>
-            <button
-              className="rounded-md p-3 bg-gray-300 hover:cursor-pointer text-gray-600"
-              onClick={handleSignOut}
-            >
+            <Button className="w-full" onClick={handleSignOut}>
               Sair
-            </button>
+            </Button>
           </div>
         )}
       </div>

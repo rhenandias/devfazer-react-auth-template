@@ -75,6 +75,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signIn = useCallback(async ({ email, password }: SignProps) => {
     // Aqui deve ser feita a chamada na rota de autenticação:
+    console.log({ email, password });
 
     // const response = await api.post<SignIn>("/auth/sign-in", {
     //   email,
@@ -123,13 +124,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const restoreToken = useCallback(async () => {
     try {
+      // Primeiro tentamos acessar o token que está salvo nos cookies
       const token = Cookies.get("accessToken");
+
+      // Caso exista um token, vamos tentar validar ele na rota auth/me
+      // Assim, adquirimos novamente as informações do usuário autenticado
 
       // if (token && !user) {
       //   const response = await api.get<AuthMe>("/auth/me");
-
       //   setUser(response.data.user);
       // }
+
+      // Aqui, vamos novamente simular uma resposta da rota de auth/me
+      if (token && !user) {
+        const response = {
+          data: {
+            user: {
+              id: "123",
+              username: "Fulano Da Silva",
+              type: "root",
+              permissions: [],
+            },
+            token: "Access Token Irá Retornar Aqui",
+          },
+        };
+
+        // E vamos utilizar o resultado simulado para restaurar o token do usuário
+        setUser(response.data.user);
+      }
     } catch {
       setLoading(false);
       signOut();
